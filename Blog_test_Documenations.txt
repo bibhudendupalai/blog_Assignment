@@ -1,0 +1,115 @@
+How to install :------
+
+1. Install the python >3.8
+2. create and activate the virtual env
+3. install req.txt
+4. run :- python3 manage.py runserver
+
+
+API Documentation Comments
+
+"""
+API Endpoints
+-------------
+
+- `POST /signup/`: User registration endpoint.
+Sample request:
+curl --location 'http://127.0.0.1:8000/signup/' \
+--header 'Content-Type: application/json' \
+--data-raw '
+{
+    "username":"test@gmail.com",
+    "password":"12345"
+}
+'
+sample Response:
+{
+    "msg": "Registation s successfull"
+}
+
+
+- `POST /signin/`: User login endpoint.
+
+Sample request:
+curl --location 'http://127.0.0.1:8000/signin/' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "username":"admin@gmail.com",
+    "password":"12345"
+}'
+
+Sample response:
+{
+"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
+"msg": "Login successful"
+}
+
+
+- `POST /createpost/`: Create a new post endpoint. Requires token in the Authorization header.
+Sample request:
+{
+"title": "New Post",
+"content": "This is the content of the new post."
+}
+
+
+- `GET /getlistPost/`: Retrieve a paginated list of all posts. Requires token in the Authorization header.
+Sample request:
+curl -X GET http://your-domain.com/api/getlistPost/ -H 'Authorization: token eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...'
+
+
+
+- `PATCH /updateposts/<int:pk>/`: Update a specific post identified by its primary key. Requires ownership.Requires token in the Authorization header.
+Sample request:
+
+curl --location --request PATCH 'http://127.0.0.1:8000/updateposts/7/' \
+--header 'Authorization: token 0a2ed28394d9eb1fbf6bc8485fea69e84df174af' \
+--header 'Content-Type: application/json' \
+--data '{
+    "title": "Index post 4",
+    "content": "About index aoio oaishdpoe lndfnlnfn adbvobav lnpfnef Edited"
+}'
+
+
+- `POST /commentposts/<int:pk>/`: Add a comment to a post identified by its primary key. Requires authentication.
+Sample request:
+
+curl --location --request PATCH 'http://127.0.0.1:8000//commentposts/7/' \
+--header 'Authorization: token 0a2ed28394d9eb1fbf6bc8485fea69e84df174af' \
+--header 'Content-Type: application/json' \
+--data '{
+    "content": "About index aoio oaishdpoe lndfnlnfn adbvobav lnpfnef Edited"
+}'
+
+
+- `POST /likeposts/<int:pk>/`: Like/unlike a post identified by its primary key. Requires authentication.
+Sample request to like:
+curl -X POST http://your-domain.com/api/likeposts/1/ -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...'
+
+Sample request to unlike:
+curl -X POST http://your-domain.com/api/likeposts/1/ -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...'
+
+
+
+"""
+
+Explanation
+API Documentation Comments: These comments are structured to provide a clear understanding of each API endpoint, including the HTTP method, endpoint path, and a sample request payload or command for testing using curl or any HTTP client.
+
+Usage Examples: Each endpoint is followed by a sample request snippet that demonstrates how to interact with the API using curl. These examples help developers understand the expected input format and provide a basis for testing API functionality.
+
+Endpoints: Each endpoint is named and mapped to its corresponding view in Django. Ensure that the views (views.py) handle the request and response logic as expected based on these documented specifications.
+
+Testing
+To test these API endpoints, you can use tools like curl from the command line or utilize HTTP clients like Postman or Insomnia. Ensure you have your Django server running locally or on a test environment accessible via HTTP requests.
+
+For example, to test user registration (/signup/):
+
+
+curl -X POST http://localhost:8000/api/signup/ -d '{"username": "user1", "password": "password123"}' -H 'Content-Type: application/json'
+Adjust the URLs (http://localhost:8000/api/) and payloads (-d '{"username": "user1", "password": "password123"}') based on your local setup and the actual data you want to send.
+
+Notes
+Ensure that your views (views.py) handle request validation, authentication, and permissions as required by your application's business logic.
+
+Customize error handling and response messages based on your application's requirements to provide informative feedback to API consumers.
